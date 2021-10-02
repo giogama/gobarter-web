@@ -3,7 +3,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import AuthContext from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import logoImg from '../../assets/logo.svg';
@@ -14,13 +14,19 @@ import Button from '../../components/button';
 
 import { Container, Content, Background } from './styles';
 
+interface SignFormData {
+    email: string;
+    password: string;
+}
+
 const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null);  
     
-    const auth = useContext(AuthContext);
-    console.log(auth);
+    const { user, signIn } = useContext(AuthContext);
+    console.log(user);
+    
 
-    const handleSubmit = useCallback(async (data: object) => {               
+    const handleSubmit = useCallback(async (data: SignFormData) => {               
         try {
             formRef.current?.setErrors({});
 
@@ -31,14 +37,19 @@ const SignIn: React.FC = () => {
             
             await schema.validate(data, {
                 abortEarly: false,
-            });            
+            });  
+            
+            signIn({
+                email: data.email,
+                password: data.password,
+            });
 
         } catch (err: any) {
             const errors = getValidationErrors(err);
 
             formRef.current?.setErrors(errors);
         }
-    }, []);
+    }, [signIn]);
 
     return (
         <Container>
