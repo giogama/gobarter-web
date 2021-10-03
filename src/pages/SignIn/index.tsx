@@ -14,7 +14,7 @@ import Button from '../../components/button';
 
 import { Container, Content, Background } from './styles';
 
-interface SignFormData {
+interface SignInFormData {
     email: string;
     password: string;
 }
@@ -26,7 +26,7 @@ const SignIn: React.FC = () => {
     console.log(user);
     
 
-    const handleSubmit = useCallback(async (data: SignFormData) => {               
+    const handleSubmit = useCallback(async (data: SignInFormData) => {               
         try {
             formRef.current?.setErrors({});
 

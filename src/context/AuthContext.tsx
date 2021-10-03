@@ -31,21 +31,24 @@ export const AuthProvider: React.FC = ({ children }) => {
         return {} as AuthState;
     });
 
-    const signIn = useCallback( async ({ email, password }: SignInCredentials) => {
+    const signIn = useCallback( async ({ email, password }) => {
         
         const response = await api.post('sessions', {
             email,
             password,
         });        
 
-        const { token, user } = response.data;
+        console.log(response.data);
 
-        localStorage.setItem('@GoBarber:token', token);
-        localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+        // const { token, user } = response.data;
 
-        setData({ token, user });
+        // localStorage.setItem('@GoBarber:token', token);
+        // localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+        // setData({ token, user });
 
     }, []);
+
 
     return (
         <AuthContext.Provider value={{user: data.user, signIn}}>
