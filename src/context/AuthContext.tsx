@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState } from 'react';
 import api from '../services/api';
+import { AxiosResponse } from 'axios';
 
 interface AuthState {
     token: string;
@@ -36,16 +37,16 @@ export const AuthProvider: React.FC = ({ children }) => {
         const response = await api.post('sessions', {
             email,
             password,
-        });        
+        });    
 
         console.log(response.data);
 
-        //const { token, user } = response.data;
+        const { token, user }  = response.data;
 
-        // localStorage.setItem('@GoBarber:token', token);
-        // localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+        localStorage.setItem('@GoBarber:token', token);
+        localStorage.setItem('@GoBarber:user', JSON.stringify(user));
 
-        // setData({ token, user });
+        setData({ token, user });
 
     }, []);
 
